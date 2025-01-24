@@ -1,9 +1,10 @@
-function startGame(){
+function startGame(){                                               // Premiere fonction lanceequand on commence le jeu
     scene.start()
     player = new player()
     player.update()
     move = ""
     jumpv = 
+    vx =
     jump = false
     map = []
     mapX = 500
@@ -25,8 +26,8 @@ function startGame(){
             move = ""
         }
     })
-    tilemap = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    tilemap = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,    // Liste que la fonction drawMap suis pour dessiner la map
+               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,    // ca fait un peu peur oui 
                0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -39,31 +40,31 @@ function startGame(){
 
 var scene = {
     canvas : document.createElement("canvas"),
-    start : function(){                                     // Méthode start() pour l'objet myGameArea pour créer le canvas
+    start : function(){                                     // Methode start() pour l'objet scene afin de creer le canvas
         this.canvas.width = window.innerWidth
         this.canvas.height = window.innerHeight
         this.context = this.canvas.getContext("2d")
         document.body.insertBefore(this.canvas, document.body.childNodes[0])
         
     },
-    clear : function() {                                    // Méthode utilisée pour effacer le contenu du canvas et reremplir dans la fonction updateMap
+    clear : function() {                                    // Methode utilisee pour effacer le contenu du canvas et reremplir dans la fonction updateMap
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
 }
 
-function player(){
+function player(){                                          // Objet player "je ne sais pas trop comment le definir" (moule a joueur).
+    this.x = (window.innerWidth / 2) - (this.width / 2)
+    this.y = (window.innerHeight * 0.2) + (60 * 2)
     this.width = 60
     this.height = 120
     ctx = scene.context
     this.update = function(){
-        this.x = (window.innerWidth / 2) - (this.width / 2)
-        this.y = (window.innerHeight * 0.2) + (60 * 2)
         ctx.fillStyle = "green"
         ctx.fillRect(this.x, this.y, this.width, this.height)
     }
 }
 
-function tile(x, y, width, height){
+function tile(x, y, width, height){                         // Moule a carreaux dans la map
     this.x = x
     this.y = y
     this.width = width
@@ -73,7 +74,7 @@ function tile(x, y, width, height){
     ctx.fillRect(this.x, this.y, this.width, this.height)
 }
 
-function drawMap(mapX, mapY, c){
+function drawMap(mapX, mapY, c){                            // Fonction pour dessiner la map chaque frame correspondant a la liste tilemap
     y = mapY
     x = mapX
     for(var i = 0; i < tilemap.length; i++){
@@ -86,7 +87,7 @@ function drawMap(mapX, mapY, c){
             x += 60
         }
         if(tilemap[i] == 1){
-            map.push(new tile(x, y, 60, 60))
+            map.push(new tile(x, y, 60, 60))                // La map est compose de plusieurs carreaux donc on va dessiner plusieurs carreaux qui sera stocke dans la liste map
             x += 60
         }
         c += 1
@@ -94,31 +95,26 @@ function drawMap(mapX, mapY, c){
 }
 
 function updateMap(){
+    scene.clear()                                       // Fonction qui est appelee chaque 20millisecondes contenant toutes les instructions permettant la mise a jour de l'interface a chaque frame
     
     if(move === "right"){
-        for(var i = 0; i < map.length; i++){
-            if(player.x + player.width < map[i].x){
-                mapX -= 10
-                scene.clear()
-                drawMap(mapX, mapY, 0)
-            }
-        }
+        vx = -10
     }
-    if(move === "left"){
-        mapX += 10
-        scene.clear()
-        drawMap(mapX, mapY, 0)
+    else if(move === "left"){
+        vx = 10
     }
-    else{
-
+    else if(move === ""){
+        vx = 0
     }
 
     if(jump == true){
-        mapY += jumpv
-        scene.clear()
-        drawMap(mapX, mapY, 0)
         jumpv -= 2
     }
+
+    mapX += vx
+    mapY += jumpv
+
+    drawMap(mapX, mapY, 0)
     player.update()
 }
 

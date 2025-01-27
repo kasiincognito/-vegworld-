@@ -35,7 +35,7 @@ function startGame(){                                               // Premiere 
                0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ]
     drawMap(mapX, mapY, 0)
-    setInterval(updateMap, 20)
+    setInterval(updateMap, 1000)
 }
 
 var scene = {
@@ -101,8 +101,8 @@ function updateMap(){       // Fonction qui est appelee chaque 20millisecondes c
     drawMap(mapX, mapY, 0)
     player.update()
     
-    for(var i = 0; i < tilemap.length; i++){
-        if(tilemap[i] == 1){
+    for(var i = 0; i < tilemap.length; i++){    // collision detection (not really working)
+        if(tilemap[o] == 1){
             if(player.x + player.width > map[i].x || player.x < map[i].x + map[i].width){
                 if(player.y >= map[i].y){
                     jumpv = false
@@ -130,8 +130,6 @@ function updateMap(){       // Fonction qui est appelee chaque 20millisecondes c
 
     mapX += vx
     mapY += jumpv
-
-    
 }
 
 startGame()

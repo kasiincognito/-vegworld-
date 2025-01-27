@@ -4,7 +4,7 @@ function startGame(){                                               // Premiere 
     player.update()
     move = ""
     jumpv = 
-    vx =
+    vx = 
     jump = false
     map = []
     mapX = 500
@@ -52,11 +52,11 @@ var scene = {
     },
 }
 
-function player(){                                          // Objet player "je ne sais pas trop comment le definir" (moule a joueur).
+function player(){
+    this.width = 60
+    this.height = 120                                          // Objet player "je ne sais pas trop comment le definir" (moule a joueur).
     this.x = (window.innerWidth / 2) - (this.width / 2)
     this.y = (window.innerHeight * 0.2) + (60 * 2)
-    this.width = 60
-    this.height = 120
     ctx = scene.context
     this.update = function(){
         ctx.fillStyle = "green"
@@ -88,14 +88,31 @@ function drawMap(mapX, mapY, c){                            // Fonction pour des
         }
         if(tilemap[i] == 1){
             map.push(new tile(x, y, 60, 60))                // La map est compose de plusieurs carreaux donc on va dessiner plusieurs carreaux qui sera stocke dans la liste map
+            map[i]
             x += 60
         }
         c += 1
     }
 }
 
-function updateMap(){
-    scene.clear()                                       // Fonction qui est appelee chaque 20millisecondes contenant toutes les instructions permettant la mise a jour de l'interface a chaque frame
+function updateMap(){       // Fonction qui est appelee chaque 20millisecondes contenant toutes les instructions permettant la mise a jour de l'interface a chaque frame
+    scene.clear()   
+    map = []
+    drawMap(mapX, mapY, 0)
+    player.update()
+    
+    for(var i = 0; i < tilemap.length; i++){
+        if(tilemap[i] == 1){
+            if(player.x + player.width > map[i].x || player.x < map[i].x + map[i].width){
+                if(player.y >= map[i].y){
+                    jumpv = false
+                }
+            }
+        }
+        else{
+            
+        }
+    }                                    
     
     if(move === "right"){
         vx = -10
@@ -114,8 +131,7 @@ function updateMap(){
     mapX += vx
     mapY += jumpv
 
-    drawMap(mapX, mapY, 0)
-    player.update()
+    
 }
 
 startGame()

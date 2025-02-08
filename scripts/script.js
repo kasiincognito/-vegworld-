@@ -3,8 +3,9 @@ function startGame(){                                               // Premiere 
     player = new player()
     player.update()
     move = ""
-    jumpv = 
-    vx = 
+    jumpv = 0
+    stone = "assets/stone.png"
+    vx = 0
     jump = false
     map = []
     mapX = 500
@@ -17,7 +18,7 @@ function startGame(){                                               // Premiere 
             move = "left"
         }
         if(event.key === "ArrowUp"){
-            jumpv = 25
+            jumpv = 20
             jump = true
         }
     })
@@ -35,7 +36,7 @@ function startGame(){                                               // Premiere 
                0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ]
     drawMap(mapX, mapY, 0)
-    setInterval(updateMap, 1000)
+    setInterval(updateMap, 20)
 }
 
 var scene = {
@@ -64,14 +65,15 @@ function player(){
     }
 }
 
-function tile(x, y, width, height){                         // Moule a carreaux dans la map
+function tile(x, y, width, height, src){                         // Moule a carreaux dans la map
     this.x = x
     this.y = y
+    this.image = new Image()
+    this.image.src = src
     this.width = width
     this.height = height
     ctx = scene.context
-    ctx.fillStyle = "red"
-    ctx.fillRect(this.x, this.y, this.width, this.height)
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
 }
 
 function drawMap(mapX, mapY, c){                            // Fonction pour dessiner la map chaque frame correspondant a la liste tilemap
@@ -87,8 +89,7 @@ function drawMap(mapX, mapY, c){                            // Fonction pour des
             x += 60
         }
         if(tilemap[i] == 1){
-            map.push(new tile(x, y, 60, 60))                // La map est compose de plusieurs carreaux donc on va dessiner plusieurs carreaux qui sera stocke dans la liste map
-            map[i]
+            map.push(new tile(x, y, 60, 60, stone))                // La map est compose de plusieurs carreaux donc on va dessiner plusieurs carreaux qui sera stocke dans la liste map
             x += 60
         }
         c += 1
@@ -96,24 +97,8 @@ function drawMap(mapX, mapY, c){                            // Fonction pour des
 }
 
 function updateMap(){       // Fonction qui est appelee chaque 20millisecondes contenant toutes les instructions permettant la mise a jour de l'interface a chaque frame
-    scene.clear()   
-    map = []
-    drawMap(mapX, mapY, 0)
-    player.update()
-    
-    for(var i = 0; i < tilemap.length; i++){    // collision detection (not really working)
-        if(tilemap[o] == 1){
-            if(player.x + player.width > map[i].x || player.x < map[i].x + map[i].width){
-                if(player.y >= map[i].y){
-                    jumpv = false
-                }
-            }
-        }
-        else{
-            
-        }
-    }                                    
-    
+    scene.clear()  
+
     if(move === "right"){
         vx = -10
     }
@@ -122,14 +107,25 @@ function updateMap(){       // Fonction qui est appelee chaque 20millisecondes c
     }
     else if(move === ""){
         vx = 0
-    }
+    } 
 
     if(jump == true){
         jumpv -= 2
     }
+    for(var i = 0; i < map.length; i++){								// Boucle permettant de verifier la collision avec le joueur pour chaques blocs de la map
+        if(player.x + player.width > map[i].x && player.x < map[i].x + map[i].width){
+            if(player.y + player.height >= map[i].y && player.y + player.height < map[i].y + map[i].height){
+                jumpv = 0
+                mapY += (player.y + player.height) - map[i].y
+            }
+        }
+    }
 
     mapX += vx
     mapY += jumpv
+    map = []
+    drawMap(mapX, mapY, 0)
+    player.update()
 }
 
 startGame()

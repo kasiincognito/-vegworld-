@@ -6,7 +6,7 @@ function startGame(){                                               // Premiere 
     jumpv = 0
     stone = "assets/stone.png"
     vx = 0
-    jump = false
+    jumpnum = 0
     map = []
     mapX = 500
     mapY = window.innerHeight * 0.2
@@ -18,8 +18,10 @@ function startGame(){                                               // Premiere 
             move = "left"
         }
         if(event.key === "ArrowUp"){
-            jumpv = 20
-            jump = true
+            if(jumpnum > 0){
+		jumpnum = 0
+		jumpv = 20
+	    }
         }
     })
     window.addEventListener("keyup", function(event){
@@ -36,7 +38,7 @@ function startGame(){                                               // Premiere 
                0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ]
     drawMap(mapX, mapY, 0)
-    setInterval(updateMap, 20)
+    setInterval(updateMap, 1000/50)
 }
 
 var scene = {
@@ -53,15 +55,16 @@ var scene = {
     },
 }
 
-function player(){
+function player(){			// Objet player "je ne sais pas trop comment le definir" (moule a joueur).
     this.width = 60
-    this.height = 120                                          // Objet player "je ne sais pas trop comment le definir" (moule a joueur).
+    this.height = 120
+    this.image = new Image()
+    this.image.src = "assets/idle1.png"                                  
     this.x = (window.innerWidth / 2) - (this.width / 2)
     this.y = (window.innerHeight * 0.2) + (60 * 2)
     ctx = scene.context
     this.update = function(){
-        ctx.fillStyle = "green"
-        ctx.fillRect(this.x, this.y, this.width, this.height)
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
     }
 }
 
@@ -99,6 +102,12 @@ function drawMap(mapX, mapY, c){                            // Fonction pour des
 function updateMap(){       // Fonction qui est appelee chaque 20millisecondes contenant toutes les instructions permettant la mise a jour de l'interface a chaque frame
     scene.clear()  
 
+    mapX += vx
+    mapY += jumpv
+    map = []
+    drawMap(mapX, mapY, 0)
+    player.update()
+
     if(move === "right"){
         vx = -10
     }
@@ -108,24 +117,26 @@ function updateMap(){       // Fonction qui est appelee chaque 20millisecondes c
     else if(move === ""){
         vx = 0
     } 
+	
+    jumpv -= 2
 
-    if(jump == true){
-        jumpv -= 2
-    }
     for(var i = 0; i < map.length; i++){								// Boucle permettant de verifier la collision avec le joueur pour chaques blocs de la map
         if(player.x + player.width > map[i].x && player.x < map[i].x + map[i].width){
             if(player.y + player.height >= map[i].y && player.y + player.height < map[i].y + map[i].height){
                 jumpv = 0
                 mapY += (player.y + player.height) - map[i].y
+		jumpnum += 1
+            }
+        }
+	if(player.y + player.height > map[i].y && player.y < map[i].y + map[i].height){
+            if(player.x + player.width >= map[i].x && player.x + player.width < map[i].x + map[i].width){
+		mapX += (player.x + player.width) - map[i].x
             }
         }
     }
 
-    mapX += vx
-    mapY += jumpv
-    map = []
-    drawMap(mapX, mapY, 0)
-    player.update()
+
+    
 }
 
 startGame()

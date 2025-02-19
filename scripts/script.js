@@ -5,11 +5,18 @@ function startGame(){                                               // Premiere 
     move = ""
     jumpv = 0
     stone = "assets/stone.png"
+    idle = ["assets/idle1.png", "assets/idle2.png"]
+    idleCounter = 0
+    left = ["assets/left1.png", "assets/left2.png", "assets/left3.png"]
+    leftCounter = 0
+    right = ["assets/right1.png", "assets/right2.png", "assets/right3.png"]
+    rightCounter = 0
     vx = 0
     jumpnum = 0
     map = []
     mapX = 500
     mapY = window.innerHeight * 0.2
+    f = 3
     window.addEventListener("keydown" ,function(event){
         if(event.key === "ArrowRight"){
             move = "right"
@@ -29,6 +36,26 @@ function startGame(){                                               // Premiere 
             move = ""
         }
     })
+
+    if(move === "right"){
+        f = 10
+	console.log(f)
+    }
+    else if(move === "left"){
+        f = 10
+    }
+    else if(move === ""){
+	f = 3
+    }
+
+    function anim(){
+	if(idleCounter >= idle.length){
+	    idleCounter = 0
+	}
+	player.image.src = idle[idleCounter]
+	idleCounter += 1
+    }
+
     tilemap = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,    // Liste que la fonction drawMap suis pour dessiner la map
                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,    // ca fait un peu peur oui 
                0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -37,6 +64,7 @@ function startGame(){                                               // Premiere 
                0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ]
+    setInterval(anim, 1000/f)
     drawMap(mapX, mapY, 0)
     setInterval(updateMap, 1000/50)
 }
@@ -134,9 +162,6 @@ function updateMap(){       // Fonction qui est appelee chaque 20millisecondes c
             }
         }
     }
-
-
-    
 }
 
 startGame()

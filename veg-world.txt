@@ -1,0 +1,16 @@
+-Veg World-
+
+Concept:
+You are a carrot at first and you should explore the vegetables
+world by interacting with other vegetables. You can choose more than
+one character when you finish levels.The objective is to eliminate every 
+single member of the snack clan in order to save humanity in their eating
+habitudes.
+
+Technology to use:
+HTML canvas with JavaScript
+
+Skills to have:
+-Tilemap creation in canvas
+-Character design with paint
+-Tilesets in paint

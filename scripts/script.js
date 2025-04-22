@@ -16,7 +16,7 @@ function startGame(){                                               // Premiere 
     map = []
     mapX = 500
     mapY = window.innerHeight * 0.2
-    f = 3
+    var f
     window.addEventListener("keydown" ,function(event){
         if(event.key === "ArrowRight"){
             move = "right"
@@ -39,7 +39,6 @@ function startGame(){                                               // Premiere 
 
     if(move === "right"){
         f = 10
-	console.log(f)
     }
     else if(move === "left"){
         f = 10
@@ -54,6 +53,7 @@ function startGame(){                                               // Premiere 
 	}
 	player.image.src = idle[idleCounter]
 	idleCounter += 1
+	setTimeout(anim, 1000/f)
     }
 
     tilemap = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,    // Liste que la fonction drawMap suis pour dessiner la map
@@ -64,7 +64,7 @@ function startGame(){                                               // Premiere 
                0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ]
-    setInterval(anim, 1000/f)
+    anim()
     drawMap(mapX, mapY, 0)
     setInterval(updateMap, 1000/50)
 }

@@ -1,33 +1,12 @@
-function player(x, y, width, height, src, rightArray){
-    this.x = x
-    this.y = y
-    this.move
-    this.rightArray = rightArray
-    this.width = width
-    this.height = height
+function player(){			// Objet player "je ne sais pas trop comment le definir" (moule a joueur).
+    this.width = 60
+    this.height = 120
     this.image = new Image()
-    this.image.src = src
+    this.image.src = "assets/idle1.png"                                  
+    this.x = (window.innerWidth / 2) - (this.width / 2)
+    this.y = (window.innerHeight * 0.2) + (60 * 2)
     ctx = scene.context
-    this.i = 1
-
     this.update = function(){
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
-    }
-
-    this.idle = function(){
-        if(character.image.src == '../-vegworld-/assets/idle1.png'){
-            character.image.src = '../-vegworld-/assets/idle2.png'
-        }
-        else{
-            character.image.src = '../-vegworld-/assets/idle1.png'
-        }
-    }
-    this.right = function(){
-        if(this.i >= 3){
-            this.i = 1
-        }
-        
-        character.image.src = rightArray[this.i]
-        this.i += 1
     }
 }

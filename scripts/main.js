@@ -1,15 +1,15 @@
-function startGame(){                                               // Premiere fonction lanceequand on commence le jeu
+function startGame(){                                          // Premiere fonction lanceequand on commence le jeu
     scene.start()
     player = new player()
     player.update()
     move = ""
     jumpv = 0
     stone = "assets/stone.png"
-    idle = ["assets/idle1.png", "assets/idle2.png"]
+    idle = ["assets/idle1.png", "assets/idle2.png"]                     //liste d'images pour l'animation de idle
     idleCounter = 0
-    left = ["assets/left1.png", "assets/left2.png", "assets/left3.png"]
+    left = ["assets/left1.png", "assets/left2.png", "assets/left3.png"] //liste d'images pour l'animation de left
     leftCounter = 0
-    right = ["assets/right1.png", "assets/right2.png", "assets/right3.png"]
+    right = ["assets/right1.png", "assets/right2.png", "assets/right3.png"]  //liste d'images pour l'animation de right
     rightCounter = 0
     vx = 0
     jumpnum = 0
@@ -67,33 +67,6 @@ function startGame(){                                               // Premiere 
     anim()
     drawMap(mapX, mapY, 0)
     setInterval(updateMap, 1000/50)
-}
-
-var scene = {
-    canvas : document.createElement("canvas"),
-    start : function(){                                     // Methode start() pour l'objet scene afin de creer le canvas
-        this.canvas.width = window.innerWidth
-        this.canvas.height = window.innerHeight
-        this.context = this.canvas.getContext("2d")
-        document.body.insertBefore(this.canvas, document.body.childNodes[0])
-        
-    },
-    clear : function() {                                    // Methode utilisee pour effacer le contenu du canvas et reremplir dans la fonction updateMap
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    },
-}
-
-function player(){			// Objet player "je ne sais pas trop comment le definir" (moule a joueur).
-    this.width = 60
-    this.height = 120
-    this.image = new Image()
-    this.image.src = "assets/idle1.png"                                  
-    this.x = (window.innerWidth / 2) - (this.width / 2)
-    this.y = (window.innerHeight * 0.2) + (60 * 2)
-    ctx = scene.context
-    this.update = function(){
-        ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
-    }
 }
 
 function tile(x, y, width, height, src){                         // Moule a carreaux dans la map

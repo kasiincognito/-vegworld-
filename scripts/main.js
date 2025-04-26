@@ -37,34 +37,14 @@ function startGame(){                                          // Premiere fonct
         }
     })
 
-    if(move === "right"){
-        f = 10
-    }
-    else if(move === "left"){
-        f = 10
-    }
-    else if(move === ""){
-	f = 3
-    }
-
-    function anim(){
-	if(idleCounter >= idle.length){
-	    idleCounter = 0
-	}
-	player.image.src = idle[idleCounter]
-	idleCounter += 1
-	setTimeout(anim, 1000/f)
-    }
-
     tilemap = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,    // Liste que la fonction drawMap suis pour dessiner la map
                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,    // ca fait un peu peur oui 
-               0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
                1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ]
-    anim()
     drawMap(mapX, mapY, 0)
     setInterval(updateMap, 1000/50)
 }

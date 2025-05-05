@@ -5,6 +5,7 @@ function startGame(){                                          // Premiere fonct
     move = ""
     jumpv = 0
     stone = "assets/stone.png"
+    grass = "assets/grass.jpg"
     idle = ["assets/idle1.png", "assets/idle2.png"]                     //liste d'images pour l'animation de idle
     idleCounter = 0
     left = ["assets/left1.png", "assets/left2.png", "assets/left3.png"] //liste d'images pour l'animation de left
@@ -26,9 +27,9 @@ function startGame(){                                          // Premiere fonct
         }
         if(event.key === "ArrowUp"){
             if(jumpnum > 0){
-		jumpnum = 0
-		jumpv = 20
-	    }
+		        jumpnum = 0
+		        jumpv = 20
+	        }
         }
     })
     window.addEventListener("keyup", function(event){
@@ -73,7 +74,7 @@ function drawMap(mapX, mapY, c){                            // Fonction pour des
             x += 60
         }
         if(tilemap[i] == 1){
-            map.push(new tile(x, y, 60, 60, stone))                // La map est compose de plusieurs carreaux donc on va dessiner plusieurs carreaux qui sera stocke dans la liste map
+            map.push(new tile(x, y, 60, 60, grass))                // La map est compose de plusieurs carreaux donc on va dessiner plusieurs carreaux qui sera stocke dans la liste map
             x += 60
         }
         c += 1
@@ -106,7 +107,7 @@ function updateMap(){       // Fonction qui est appelee chaque 20millisecondes c
             if(player.y + player.height >= map[i].y && player.y + player.height < map[i].y + map[i].height){
                 jumpv = 0
                 mapY += (player.y + player.height) - map[i].y
-		jumpnum += 1
+		        jumpnum += 1
             }
         }
 	if(player.y + player.height > map[i].y && player.y < map[i].y + map[i].height){

@@ -114,18 +114,7 @@ function updateMap(){       // Fonction qui est appelee chaque 20millisecondes c
     jumpv -= 2
 
     for(var i = 0; i < map.length; i++){								// Boucle permettant de verifier la collision avec le joueur pour chaques blocs de la map
-        if(player.x + player.width > map[i].x && player.x < map[i].x + map[i].width){
-            if(player.y + player.height >= map[i].y && player.y + player.height < map[i].y + map[i].height){
-                jumpv = 0
-                mapY += (player.y + player.height) - map[i].y
-		        jumpnum += 1
-            }
-        }
-	if(player.y + player.height > map[i].y && player.y < map[i].y + map[i].height){
-            if(player.x + player.width >= map[i].x && player.x + player.width < map[i].x + map[i].width){
-		mapX += (player.x + player.width) - map[i].x
-            }
-        }
+        verifCollision(player, map[i])
     }
 }
 

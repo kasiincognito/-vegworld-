@@ -4,8 +4,11 @@ function startGame(){                                          // Premiere fonct
     player.update()
     move = ""
     jumpv = 0
-    stone = "assets/stone.png"
+    stone = "assets/stone.jpg"
     grass = "assets/grass.jpg"
+    water = "assets/water.jpg"
+    wood = "assets/wood.jpg"
+    leaf = "assets/leaf.jpg"
     idle = ["assets/idle1.png", "assets/idle2.png"]                     //liste d'images pour l'animation de idle
     idleCounter = 0
     left = ["assets/left1.png", "assets/left2.png", "assets/left3.png"] //liste d'images pour l'animation de left
@@ -40,11 +43,11 @@ function startGame(){                                          // Premiere fonct
 
     tilemap = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,    // Liste que la fonction drawMap suis pour dessiner la map
                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,    // ca fait un peu peur oui 
-               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-               0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-               0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+               0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+               0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+               0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0,
+               3, 3, 3, 3, 3, 2, 2, 1, 3, 3, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3,
+               3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3,
     ]
     drawMap(mapX, mapY, 0)
     setInterval(updateMap, 1000/50)
@@ -75,6 +78,14 @@ function drawMap(mapX, mapY, c){                            // Fonction pour des
         }
         if(tilemap[i] == 1){
             map.push(new tile(x, y, 60, 60, grass))                // La map est compose de plusieurs carreaux donc on va dessiner plusieurs carreaux qui sera stocke dans la liste map
+            x += 60
+        }
+        if(tilemap[i] == 2){
+            map.push(new tile(x, y, 60, 60, stone))                // La map est compose de plusieurs carreaux donc on va dessiner plusieurs carreaux qui sera stocke dans la liste map
+            x += 60
+        }
+        if(tilemap[i] == 3){
+            map.push(new tile(x, y, 60, 60, water))                // La map est compose de plusieurs carreaux donc on va dessiner plusieurs carreaux qui sera stocke dans la liste map
             x += 60
         }
         c += 1

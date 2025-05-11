@@ -12,5 +12,5 @@ HTML canvas with JavaScript
 
 Skills to have:
 -Tilemap creation in canvas
--Character design with paint
--Tilesets in paint
+-Character design with pixikart
+-Tilesets in pixilart

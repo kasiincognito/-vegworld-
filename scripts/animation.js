@@ -1,4 +1,4 @@
-function update(){
+function animate(){
     time = 5
     if(move == ""){
         console.log("I'm not moving")
@@ -25,6 +25,6 @@ function update(){
         player.image.src = left[leftCounter]
         leftCounter += 1
     }
-    setTimeout(update, 1000/time)
+    setTimeout(animate, 1000/time)
 }
-update()
+animate()

@@ -11,7 +11,7 @@ function startGame(){
     move = ""
     var vegAudio = document.getElementById('vegAudio')
 
-    // Précharger les images UNE SEULE FOIS
+    // charger les images une seule fois
     stone = new Image()
     stone.src = "assets/stone.jpg"
 
@@ -112,7 +112,7 @@ function drawMap(mapX, mapY, l, sub){                            // Fonction pou
     }
 }
 
-function updateMap(){       // Fonction qui est appelee chaque 20millisecondes contenant toutes les instructions permettant la mise a jour de l'interface a chaque frame
+function updateMap(){
     scene.clear()  
 
     mapY += player.jumpv
@@ -124,7 +124,7 @@ function updateMap(){       // Fonction qui est appelee chaque 20millisecondes c
     player.update()
     player.move(move)
 
-    for(var i = 0; i < collider.length; i++){								// Boucle permettant de verifier la collision avec le joueur pour chaques blocs de la map
+    for(var i = 0; i < collider.length; i++){	
         checkCollision(player, collider[i], "player")
 	checkCollision(ennemy, collider[i], "entity")
     }

@@ -1,7 +1,11 @@
 function startGame(){ 
     background = new background(0, -200, 4002, 950, "assets/mountains.png")
     tilemap = new tutorial()
-    enemy = new ennemy()
+    enemy = []
+    for(var i = 0; i < 1; i++){
+        enemy.push(new ennemy())
+    }
+    health_bar = new Health()
     collider = []
     map = []
     scene.start()
@@ -56,7 +60,7 @@ function startGame(){
     ennemy = new ennemy()
     ennemy.update()
     background.update()
-    setInterval(updateMap, 1000/50)
+    setInterval(updateMap, 1000/60)
 }
 
 
@@ -116,21 +120,27 @@ function updateMap(){
     scene.clear()  
 
     mapY += player.jumpv
-    background.y += player.jumpv / 10
+    background.y = mapY / 10 - 200
     collider = []
     map = []
     background.update()
     drawMap(mapX, mapY, tilemap.limit, tilemap)
     player.update()
     player.move(move)
+    
+    if(mapY < -2000){
+	mapY = window.innerHeight * 0.2
+    }
 
     for(var i = 0; i < collider.length; i++){	
         checkCollision(player, collider[i], "player")
-	checkCollision(ennemy, collider[i], "entity")
     }
     mapX += player.vx
-    background.x += player.vx / 10
-    enemy.update()
+    background.x  = mapX / 10 - 100
+    for(var i = 0; i < enemy.length; i++){
+        enemy[i].update()
+    }
+    health_bar.update()
 	
 }
 

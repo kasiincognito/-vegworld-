@@ -1,6 +1,7 @@
 function player(image) {
     this.width = 60
     this.height = 120
+    this.velocity = 10
     this.vx = 0
     this.jumpv = 0
     this.jumpnum = 0
@@ -16,10 +17,10 @@ function player(image) {
     this.move = function (dir) {
 
         if (dir === "right") {
-            this.vx = -13
+            this.vx = -this.velocity
         }
         else if (dir === "left") {
-            this.vx = 13
+            this.vx = this.velocity
         }
         else if (dir === "") {
             if (this.vx > 0) {
